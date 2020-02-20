@@ -9,7 +9,7 @@ ON product.categoryid=category.id;
 SELECT "order".id, shipper.companyname
 FROM "order"
 JOIN shipper
-ON "order".ship=shipper.id
+ON "order".shipvia=shipper.id
 WHERE "order".orderdate < "2012-08-9";
 -- Display the name and quantity of the products ordered in order with Id 10251. Sort by ProductName. Shows 3 records.
 SELECT product.productname
@@ -27,3 +27,4 @@ FROM "order"
 JOIN customer
 ON "order".customerid = customer.id
 JOIN employee
+ON "order".employeeid = employee.id;

@@ -1,4 +1,4 @@
-const db = require("../data/dbConfig.js")
+const db = require("../data/dbConfig")
 
 module.exports = {
     find,
@@ -24,19 +24,25 @@ function findSteps(id){
         .select("steps.id","schemes.scheme_name", "steps.step_number", "steps.instructions")
         .orderBy("step_number")
         .where({scheme_id: id})
-    )
+    )}
+// 
+function add(body) {
+    return db('schemes')
+        .insert(body)
+        .then(([id]) => {
+            return findById(id);
+        })
 }
 
-function add(scheme){
-    return db('schemes').insert(scheme, "id")
-}
-
-function update(changes, id){
-    return (
-        db('schemes').where({id: id}).update()
-    )
+function update(changes, id) {
+    return db('schemes')
+        .where({ id })
+        .update(changes)
+        .then(() => {
+            return findById(id);
+        })
 }
 
 function remove(id){
-    return db(`schemes`).where({id: id}).delete()
+    return db(`schemes`).where({id: id}).delete(id)
 }
